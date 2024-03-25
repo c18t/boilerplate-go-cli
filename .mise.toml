@@ -1,2 +1,33 @@
 [tools]
-go = "latest"
+pre-commit = "3.7.0"
+goreleaser = "1.24.0"
+
+[tasks.setup]
+description = "Setup project"
+depends = ["setup:mise", "setup:go-mod"]
+run = "mise run setup:pre-commit"
+
+[tasks."setup:mise"]
+description = "Setup project mise"
+run = "mise install -y"
+
+[tasks."setup:go-mod"]
+description = "Setup project go.mod"
+run = "go mod download"
+
+[tasks."setup:pre-commit"]
+description = "Setup project pre-commit"
+depends = ["setup:mise"]
+run = "pre-commit install"
+
+[tasks.build]
+description = "Build the CLI"
+alias = "b"
+run = "make"
+sources = ["go.mod", "main.go", "cmd/**/*.go", "internal/**/*.go"]
+outputs = ["bin/app"]
+
+[tasks.release]
+description = "Build release binary"
+alias = "r"
+run = "goreleaser release --snapshot --rm-dist"
