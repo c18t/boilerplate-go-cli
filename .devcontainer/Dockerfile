@@ -40,7 +40,6 @@ COPY .cobra.yaml /home/${CONTAINER_USER}/.cobra.yaml
 
 # go tools setting args
 ARG DELVE_VERSION=latest
-ARG COBRA_CLI_VERSION=latest
 
 RUN <<EOF
 : 'mise setup for bash'
@@ -49,7 +48,6 @@ echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 git config --global safe.directory ${WORKING_DIR}
 : 'install go tools'
 go install github.com/go-delve/delve/cmd/dlv@${DELVE_VERSION}
-go install github.com/spf13/cobra-cli@${COBRA_CLI_VERSION}
 EOF
 
 # delve server port
