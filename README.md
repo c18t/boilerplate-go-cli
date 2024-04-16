@@ -15,7 +15,7 @@ support (e.g., Visual Studio Code).
 
 #### Using GitHub Codespaces
 
-1. Click "Use this template" on the project page and select "Open in a codespace".
+1. Click "Use this template" on this project page and select "Open in a codespace".
 2. Follow the steps in the Codespaces environment to set up your development environment.
 3. Once set up, proceed to the "Setup Container Workspace" section below.
 
@@ -31,9 +31,9 @@ support (e.g., Visual Studio Code).
    cd $(ghq root)/github.com/<name>/my-project
    ```
 3. Open the project in Dev Containers:
-   - `code .`
-   - `Ctrl` + `Shift` + `P`
-   - `>Dev Containers: Reopen in Container`
+   1. `code .`
+   1. `Ctrl` + `Shift` + `P`
+   1. `>Dev Containers: Reopen in Container`
 
 ### Setup Container Workspace
 
@@ -60,10 +60,10 @@ support (e.g., Visual Studio Code).
 ```console
 $ mise tasks
 Name              Description                         Source
-build             Build the CLI application           ~/Projects/github.com/c18t/boilerplate-go-cli/.mise.toml
-release           Build release binaries              ~/Projects/github.com/c18t/boilerplate-go-cli/.mise.toml
-setup             Setup (Runs all `setup:*` tasks)    ~/Projects/github.com/c18t/boilerplate-go-cli/.mise.toml
-setup:go-mod      Install go modules with go.mod      ~/Projects/github.com/c18t/boilerplate-go-cli/.mise.toml
-setup:mise        Install dev dependencies with mise  ~/Projects/github.com/c18t/boilerplate-go-cli/.mise.toml
-setup:pre-commit  Sets up pre-commit hooks            ~/Projects/github.com/c18t/boilerplate-go-cli/.mise.toml
+build             Build the CLI application           /workspaces/app/.mise.toml
+release           Build release binaries              /workspaces/app/.mise.toml
+setup             Setup (Runs all `setup:*` tasks)    /workspaces/app/.mise.toml
+setup:go-mod      Install go modules with go.mod      /workspaces/app/.mise.toml
+setup:mise        Install dev dependencies with mise  /workspaces/app/.mise.toml
+setup:pre-commit  Set up pre-commit hooks             /workspaces/app/.mise.toml
 ```

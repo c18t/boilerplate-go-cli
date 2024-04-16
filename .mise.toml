@@ -10,7 +10,7 @@ shellcheck = "0.10.0"
 "npm:prettier" = "3.2.5"
 
 [tasks.setup]
-description = "Sets up the env (Runs all `setup:*` tasks)"
+description = "Setup (Runs all `setup:*` tasks)"
 depends = ["setup:mise", "setup:go-mod"]
 run = "mise run setup:pre-commit"
 
@@ -23,7 +23,7 @@ description = "Install go modules with go.mod"
 run = "go mod download"
 
 [tasks."setup:pre-commit"]
-description = "Sets up pre-commit hooks"
+description = "Set up pre-commit hooks"
 depends = ["setup:mise"]
 run = "pre-commit install"
 
