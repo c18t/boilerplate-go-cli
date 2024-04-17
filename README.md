@@ -46,8 +46,15 @@ support (e.g., Visual Studio Code).
    ```shell
    cobra-cli init
    cobra-cli add <new command>
+   scaffdog generate command --answer "name:<new command>" --answer "usecase:command"
    ```
-3. Build and run the application:
+3. Wire a command and a controller: (open &lt;new command&gt; code [e.g. ./cmd/test.go])
+   ```diff
+   func init() {
+   +   testCmd.RunE = createTestCommand()
+       rootCmd.AddCommand(testCmd)
+   ```
+4. Build and run the application:
    ```shell
    mise run build
    ./bin/app
