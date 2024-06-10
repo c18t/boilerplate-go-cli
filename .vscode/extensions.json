@@ -2,6 +2,7 @@
   "recommendations": [
     "eamodio.gitlens",
     "esbenp.prettier-vscode",
+    "golang.go",
     "me-dutour-mathieu.vscode-github-actions",
     "ms-vscode-remote.remote-containers",
     "oderwat.indent-rainbow",
