@@ -1,15 +1,11 @@
 # syntax=docker/dockerfile:1.4
-FROM golang:1.22.1-bookworm
+FROM golang:1.22.5-bookworm
 
 # install mise with apt
 ## xz-utils (for tar -xJv in mise install)
 RUN <<EOF
-apt update -y && apt install -y gpg sudo wget curl xz-utils less
-sudo install -dm 755 /etc/apt/keyrings
-wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
-sudo apt update
-sudo apt install -y mise
+apt-get update -y && apt-get install -y gpg sudo wget curl xz-utils less
+gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys 0x7413A06D
 EOF
 
 # create container user
@@ -35,13 +31,16 @@ ARG WORKING_DIR=/workspaces/app
 WORKDIR ${WORKING_DIR}
 
 # copy setting to home
-COPY mise-config.toml /home/${CONTAINER_USER}/.config/mise/config.toml
-COPY .cobra.yaml /home/${CONTAINER_USER}/.cobra.yaml
+COPY --chown=${UID}:${GID} mise-config.toml /home/${CONTAINER_USER}/.config/mise/config.toml
+COPY --chown=${UID}:${GID} .cobra.yaml /home/${CONTAINER_USER}/.cobra.yaml
 
 # go tools setting args
 ARG DELVE_VERSION=latest
 
 RUN <<EOF
+: 'ensure the below is signed with the mise release key'
+curl https://mise.jdx.dev/install.sh.sig | gpg --decrypt > install.sh
+sh ./install.sh
 : 'mise setup for bash'
 echo 'eval "$(mise activate bash)"' >> ~/.bashrc
 : 'allow the execution of git commands in a container workspace'
