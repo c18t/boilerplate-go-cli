@@ -74,3 +74,13 @@ setup:go-mod      Install go modules with go.mod      /workspaces/app/.mise.toml
 setup:mise        Install dev dependencies with mise  /workspaces/app/.mise.toml
 setup:pre-commit  Set up pre-commit hooks             /workspaces/app/.mise.toml
 ```
+
+## Enabling Automated Releases
+
+1. Enable the Sample Workflow:
+   ```shell
+   mv .github/workflows/release.yaml.example .github/workflows/release.yaml
+   ```
+2. Push to the `main` branch
+3. Approve the pull request from the [tagpr](https://github.com/Songmu/tagpr) bot
+4. Check the releases page of your repository
