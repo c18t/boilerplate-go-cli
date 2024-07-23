@@ -30,7 +30,12 @@ support (e.g., Visual Studio Code).
    ghq get <name>/my-project
    cd $(ghq root)/github.com/<name>/my-project
    ```
-3. Open the project in Dev Containers:
+3. Add UID:GID to .env:
+   ```shell
+   cp .env.sample .env
+   (echo UID=$(id -u) & echo GID=$(id -g)) >> .env
+   ```
+4. Open the project in Dev Containers:
    1. `code .`
    1. `Ctrl` + `Shift` + `P`
    1. `>Dev Containers: Reopen in Container`
@@ -59,6 +64,10 @@ support (e.g., Visual Studio Code).
    mise run build
    ./bin/app
    ```
+5. [extra] Install extensions recommended for the workspace:
+   1. `Ctrl` + `Shift` + `P`
+   1. `>Extensions: Show Recommended Extensions`
+   1. Click `install` button.
 
 ## Avaiable Task Runner Commands
 
