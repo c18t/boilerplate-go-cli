@@ -1,8 +1,22 @@
 package inject
 
-import "github.com/samber/do/v2"
+import (
+	"sync"
 
-var Injector = AddProvider()
+	"github.com/samber/do/v2"
+)
+
+var (
+	injector *do.RootScope
+	once     sync.Once
+)
+
+func GetInjector() *do.RootScope {
+	once.Do(func() {
+		injector = AddProvider()
+	})
+	return injector
+}
 
 func AddProvider() *do.RootScope {
 	var i = do.New()
