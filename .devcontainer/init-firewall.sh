@@ -71,6 +71,7 @@ for domain in \
   "sum.golang.org" \
   "honnef.co" \
   "storage.googleapis.com" \
+  "mise-versions.jdx.dev" \
   "nodejs.org" \
   "registry.npmjs.org" \
   "api.anthropic.com" \

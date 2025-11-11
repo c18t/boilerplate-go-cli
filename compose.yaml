@@ -21,4 +21,26 @@ services:
         consistency: deligated
         source: ${PWD:-.}
         target: ${WORKING_DIR:-/workspaces/app}
+      - type: volume
+        source: app-mise-cache
+        target: /mise
+      - type: volume
+        source: app-pnpm-cache
+        target: /home/${CONTAINER_USER:-user}/.local/share/pnpm
+      - type: volume
+        source: app-node-modules
+        target: ${WORKING_DIR:-/workspaces/app}/node_modules
+      - type: volume
+        source: claude-code-bashhistory
+        target: /commandhistory
+      - type: volume
+        source: claude-code-config
+        target: /home/${CONTAINER_USER:-user}/.claude
     environment: *args
+
+volumes:
+  app-mise-cache:
+  app-pnpm-cache:
+  app-node-modules:
+  claude-code-bashhistory:
+  claude-code-config:

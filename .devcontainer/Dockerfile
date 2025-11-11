@@ -3,12 +3,19 @@ FROM golang:1.25.3-trixie
 
 # shell settings
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENV SHELL=bash
 
 # workspace settings
 ARG WORKING_DIR=/workspaces/app
 
 # set `DEVCONTAINER` environment variable to help with orientation
 ENV DEVCONTAINER=true
+
+# container user settings
+ARG CONTAINER_USER=user
+ARG UID=1000
+ARG GID=1000
+ENV XDG_LOCAL="/home/${CONTAINER_USER}/.local"
 
 # mise settings
 ENV MISE_DATA_DIR="/mise"
@@ -18,21 +25,26 @@ ENV MISE_INSTALL_PATH="/usr/local/bin/mise"
 ENV PATH="/mise/shims:$PATH"
 # ENV MISE_VERSION="..."
 
+# pnpm settings
+ENV PNPM_HOME="/home/${CONTAINER_USER}/.local/share/pnpm"
+
 # claude code settings
 ARG TZ=
 ENV TZ="${TZ}"
-ARG CLAUDE_CODE_VERSION=latest
-
-# container user settings
-ARG CONTAINER_USER=user
-ARG UID=1000
-ARG GID=1000
+ENV CLAUDE_CODE_CONFIG="/home/${CONTAINER_USER}/.claude"
 
 # Copy scripts
-COPY init-firewall.sh /usr/local/bin/
 COPY start.sh /usr/local/bin/
+COPY post-create.sh /usr/local/bin/
+COPY init-firewall.sh /usr/local/bin/
 
 RUN <<EOF
+: 'add debian sid for latest git'
+echo 'deb http://deb.debian.org/debian sid main' > /etc/apt/sources.list.d/sid.list; \
+printf 'Package: *\nPin: release a=sid\nPin-Priority: 100\n\n' \
+  >  /etc/apt/preferences.d/git-from-sid
+printf 'Package: git*\nPin: release a=sid\nPin-Priority: 990\n' \
+  >> /etc/apt/preferences.d/git-from-sid
 : 'install mise deendencies and utils for init-firewall'
 apt-get update \
   && apt-get -y --no-install-recommends install \
@@ -45,19 +57,17 @@ curl https://mise.run | sh
 : 'create container user'
 groupadd -g ${GID} -o ${CONTAINER_USER}
 useradd -m -s /bin/bash -u ${UID} -g ${GID} -o ${CONTAINER_USER}
-: 'create workspace and config directories and set permissions'
-mkdir -p ${WORKING_DIR} /mise /home/${CONTAINER_USER}/.claude \
-  && chown -R ${CONTAINER_USER} ${WORKING_DIR} /mise /home/${CONTAINER_USER}/.claude
+: 'create workspace and config directories'
+mkdir -p /go /mise ${XDG_LOCAL} ${PNPM_HOME} ${WORKING_DIR} ${WORKING_DIR}/node_modules ${CLAUDE_CODE_CONFIG}
 : 'grant access to container user'
-chmod 755 /usr/local/bin/start.sh
-chown -R ${CONTAINER_USER} /go
+chown -R ${CONTAINER_USER} /go /mise ${XDG_LOCAL} ${PNPM_HOME} ${WORKING_DIR} ${WORKING_DIR}/node_modules ${CLAUDE_CODE_CONFIG}
+: 'setup start script'
+chmod +x /usr/local/bin/start.sh
+chmod +x /usr/local/bin/post-create.sh
 : 'set up init-firewall script'
 chmod +x /usr/local/bin/init-firewall.sh \
   && echo "%${CONTAINER_USER} ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/${CONTAINER_USER}-init-firewall \
   && chmod 0440 /etc/sudoers.d/${CONTAINER_USER}-init-firewall
-: 'grant chown execution to container user'
-echo "%${CONTAINER_USER} ALL=(root) NOPASSWD: /usr/bin/chown" > /etc/sudoers.d/${CONTAINER_USER}-chown \
-  && chmod 0440 /etc/sudoers.d/${CONTAINER_USER}-chown
 : 'persist bash history'
 SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
   && mkdir /commandhistory \

@@ -43,17 +43,8 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
-  "mounts": [
-    "source=mise-cache-${devcontainerId},target=/mise,type=volume",
-    "source=claude-code-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
-    "source=claude-code-config-${devcontainerId},target=/home/user/.claude,type=volume"
-  ],
-  "containerEnv": {
-    "CLAUDE_CONFIG_DIR": "/home/user/.claude"
-  },
-
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh && mise trust && mise run setup",
+  "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh && post-create.sh",
   "waitFor": "postStartCommand"
 
   // Configure tool-specific properties.

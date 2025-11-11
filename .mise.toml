@@ -4,7 +4,8 @@
 
 [tools]
 node = "25.1.0"
-claude-code = "2.0.36"
+python = "3.14.0"
+container-use = "0.4.2"
 goreleaser = "2.12.7"
 pnpm = "10.21.0"
 pre-commit = "4.4.0"
@@ -38,18 +39,14 @@ outputs = ['node_modules/.pnpm/lock.yaml']
 
 [tasks."setup:claude-mcp"]
 description = "Set up claude code mcp servers"
-run = "mise run setup:claude-mcp:*"
-env.MISE_JOBS = '1'
-
-[tasks."setup:claude-mcp:container-use"]
-description = "Set up claude code mcp container-use"
-depends = ["setup:mise"]
-run = "claude mcp get container-use || claude mcp add container-use -- container-use stdio"
-
-[tasks."setup:claude-mcp:go"]
-description = "Set up claude code mcp go"
-depends = ["setup:mise"]
-run = "claude mcp get go || claude mcp add go -- npx -y @mizchi/lsmcp -p gopls"
+run = """
+  SETTING=.claude/settings.local.json
+  if [ ! -e ${SETTING} ]; then
+    cp .claude/settings.local.template.json .claude/settings.local.json
+  fi
+  MCP=$(jq -r ".mcpServers | keys" .mcp.json)
+  (rm ${SETTING} && jq .enabledMcpjsonServers="${MCP}" > ${SETTING}) < ${SETTING}
+"""
 
 [tasks."setup:pre-commit"]
 description = "Set up pre-commit hooks"
@@ -69,3 +66,16 @@ outputs = ["bin/app"]
 description = "Build release binaries"
 alias = "r"
 run = "goreleaser release --snapshot --clean"
+
+[tasks.devcontainer-up]
+description = "Start devcontainer and run Claude Code"
+alias = "dev-up"
+run = """
+  if "${DEVCONTAINER}"; then
+    echo DEVCONTAINER
+    alias claude="claude --dangerously-skip-permissions"
+    ccmanager
+  else
+    ccmanager --devc-up-command 'devcontainer up --workspace-folder .' --devc-exec-command 'devcontainer exec --workspace-folder . -- claude --dangerously-skip-permissions'
+  fi
+"""
