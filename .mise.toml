@@ -21,7 +21,7 @@ yamllint = "latest"
 
 [tasks.setup]
 description = "Set up (Runs all `setup:*` tasks)"
-depends = ["setup:mise", "setup:go-mod", "setup:pnpm", "setup:claude-mcp", "setup:pre-commit"]
+depends = ["setup:mise", "setup:go-mod", "setup:pnpm", "setup:claude-mcp", "setup:pre-commit", "setup:ignore-workspace-file-changes"]
 
 [tasks."setup:mise"]
 description = "Install dev dependencies with mise"
@@ -61,6 +61,10 @@ depends = ["setup:mise"]
 run = "pre-commit install"
 sources = ['.pre-commit-config.yaml']
 outputs = ['.git/hooks/pre-commit']
+
+[tasks."setup:ignore-workspace-file-changes"]
+description = "Ignore local changes to workspace file"
+run = "git update-index --assume-unchanged app.code-workspace"
 
 [tasks.build]
 description = "Build the CLI application"
