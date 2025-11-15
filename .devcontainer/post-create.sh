@@ -5,7 +5,7 @@ USER=$(whoami)
 
 # mise settings
 # shellcheck disable=SC2016
-echo 'eval "$(mise activate bash)"' >> /home/"${USER}"/.bashrc
+echo 'eval "$(mise activate bash)"' >> "/home/${USER}/.bashrc"
 mise trust
 mise run setup:mise
 
@@ -17,7 +17,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # 明示的に指定しないとワークスペースに作られてしまう
-pnpm config set store-dir "$PNPM_HOME"/store
+pnpm config set store-dir "${PNPM_HOME}/store"
 # node-gyp がないと node-pty のビルドスクリプトで落ちる
 pnpm i -g node-gyp
 # mise run setup:pnpm で初回インストールすると非常に古い pnpm で動いてしまうため個別に実行

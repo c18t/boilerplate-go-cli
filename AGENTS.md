@@ -42,10 +42,30 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 This project uses Dev Containers (Codespaces or VS Code). All development tools
 are managed via [mise](https://mise.jdx.dev/).
 
-### container-use
+### Environment Check Before Code Modifications
 
-**Note:** If the `DEVCONTAINER` environment variable is set, you can ignore this
-section. The instructions below apply only when working outside of a Dev Container.
+**Before starting any code changes, verify your development environment and
+adapt your workflow accordingly:**
+
+1. **Check if you're in a DevContainer:**
+
+   ```bash
+   echo $DEVCONTAINER
+   ```
+
+   - If the variable is set (not empty): you're inside a DevContainer
+   - If the variable is unset (empty): you're outside a DevContainer
+
+2. **Choose workflow based on environment:**
+
+   **Inside DevContainer:**
+   - If on `main` branch: Ask the user if they want to create a new branch worktree
+   - If on a non-`main` worktree: Proceed with implementation
+
+   **Outside DevContainer:**
+   - Use the `container-use` workflow described below
+
+### container-use
 
 ALWAYS use ONLY Environments for ANY and ALL file, code, or shell operations—NO
 EXCEPTIONS—even for simple or generic requests.
@@ -78,15 +98,45 @@ make debug        # Build with debug symbols to /tmp
 **Testing:**
 
 ```bash
-go test ./...           # Run all tests
-go test -v ./path/to/package  # Run specific package tests
+# Run all tests
+go test ./...
+
+# Run specific package tests with verbose output
+go test -v ./path/to/package
+
+# Run tests with coverage
+go test -cover ./...
+
+# Verify build before committing
+mise run build
 ```
 
 **Code Quality:**
 
+**IMPORTANT**: When you modify files, you MUST run the appropriate linters to
+check for errors before committing:
+
+**For Go files** (`**/*.go`):
+
+```bash
+staticcheck ./...
+```
+
+This ensures that Go code follows best practices and maintains consistency
+across the project.
+
+**For Markdown files** (any `.md` file):
+
+```bash
+markdownlint-cli2 "**/*.md"
+```
+
+This validates Markdown formatting and ensures documentation consistency.
+
+**Run all linters:**
+
 ```bash
 pre-commit run --all-files  # Run all linters and formatters
-golangci-lint run           # Run Go linter
 ```
 
 **Release:**

@@ -11,12 +11,6 @@
       "command": "npx",
       "args": ["-y", "@mizchi/lsmcp", "-p", "gopls"],
       "env": {}
-    },
-    "playwright": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
-      "env": {}
     }
   }
 }

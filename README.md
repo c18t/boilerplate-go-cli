@@ -30,12 +30,17 @@ support (e.g., Visual Studio Code).
    ghq get <name>/my-project
    cd $(ghq root)/github.com/<name>/my-project
    ```
-3. Add UID:GID to .env:
+3. Add GH_TOKEN to .env (if necessary):
    ```shell
    cp .env.sample .env
+   gh auth token | xargs -I {} echo "GH_TOKEN="{} >> .env
+   ```
+4. Add UID:GID to .env (if necessary):
+   ```shell
+   # cp .env.sample .env
    (echo UID=$(id -u) & echo GID=$(id -g)) >> .env
    ```
-4. Open the project in Dev Containers:
+5. Open the project in Dev Containers:
    1. `code .`
    1. `Ctrl` + `Shift` + `P`
    1. `>Dev Containers: Reopen in Container`
@@ -44,8 +49,7 @@ support (e.g., Visual Studio Code).
 
 1. Run setup tasks:
    ```shell
-   mise trust
-   mise run setup
+   post-create.sh
    ```
 2. Create new command:
    ```shell
@@ -69,19 +73,25 @@ support (e.g., Visual Studio Code).
    1. `>Extensions: Show Recommended Extensions`
    1. Click `install` button.
 
-## Avaiable Task Runner Commands
+## Available Task Runner Commands
 
 `mise run <task name>`
 
 ```console
 $ mise tasks
-Name              Description                         Source
-build             Build the CLI application           /workspaces/app/.mise.toml
-release           Build release binaries              /workspaces/app/.mise.toml
-setup             Setup (Runs all `setup:*` tasks)    /workspaces/app/.mise.toml
-setup:go-mod      Install go modules with go.mod      /workspaces/app/.mise.toml
-setup:mise        Install dev dependencies with mise  /workspaces/app/.mise.toml
-setup:pre-commit  Set up pre-commit hooks             /workspaces/app/.mise.toml
+Name                                 Description
+build                                Build the CLI application
+dev-up:ccmanager-skip-permissions    Set up ccmanager to skip permissions
+dev-up:ccmanager-worktree-settings   Set up ccmanager worktree auto-directory settings
+dev-up:claude-code-stop-autoupdates  Set up Claude Code to disable auto-updates
+devcontainer-up                      Start devcontainer and run ccmanager with Claude...
+release                              Build release binaries
+setup                                Set up (Runs all `setup:*` tasks)
+setup:claude-mcp                     Set up Claude Code MCP servers
+setup:go-mod                         Install go modules with go.mod
+setup:mise                           Install dev dependencies with mise
+setup:pnpm                           Set up pnpm packages
+setup:pre-commit                     Set up pre-commit hooks
 ```
 
 ## Enabling Automated Releases
