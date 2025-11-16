@@ -35,12 +35,7 @@ support (e.g., Visual Studio Code).
    cp .env.sample .env
    gh auth token | xargs -I {} echo "GH_TOKEN="{} >> .env
    ```
-4. Add UID:GID to .env (if necessary):
-   ```shell
-   # cp .env.sample .env
-   (echo UID=$(id -u) & echo GID=$(id -g)) >> .env
-   ```
-5. Open the project in Dev Containers:
+4. Open the project in Dev Containers:
    1. `code .`
    1. `Ctrl` + `Shift` + `P`
    1. `>Dev Containers: Reopen in Container`
@@ -57,7 +52,7 @@ support (e.g., Visual Studio Code).
    cobra-cli add <new command>
    scaffdog generate command --answer "name:<new command>" --answer "usecase:command"
    ```
-3. Wire a command and a controller: (open &lt;new command&gt; code [e.g. ./cmd/test.go])
+3. Wire a command and a controller: (open `<new command>` code [e.g. ./cmd/test.go])
    ```diff
    func init() {
    +   testCmd.RunE = createTestCommand()
@@ -89,6 +84,7 @@ release                              Build release binaries
 setup                                Set up (Runs all `setup:*` tasks)
 setup:claude-mcp                     Set up Claude Code MCP servers
 setup:go-mod                         Install go modules with go.mod
+setup:ignore-workspace-file-changes  Ignore local changes to workspace file
 setup:mise                           Install dev dependencies with mise
 setup:pnpm                           Set up pnpm packages
 setup:pre-commit                     Set up pre-commit hooks
