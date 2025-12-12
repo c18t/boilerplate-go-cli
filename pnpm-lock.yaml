@@ -23,8 +23,8 @@ importers:
         specifier: ^0.19.1
         version: 0.19.1
       pnpm:
-        specifier: ^10.22.0
-        version: 10.22.0
+        specifier: ^10.24.0
+        version: 10.24.0
       prettier:
         specifier: ^3.7.3
         version: 3.7.3
@@ -1565,10 +1565,10 @@ packages:
       }
     engines: { node: '>=12' }
 
-  pnpm@10.22.0:
+  pnpm@10.24.0:
     resolution:
       {
-        integrity: sha512-vwSe/plbKPUn/StBrgR0zikYb37cs79UUIe9Yfu+uyv3U2LRMH/aCcLSiOHkmXh6wS1Py2F6l0cYpgUfLu50HA==,
+        integrity: sha512-Af+K5xtEGZA7ZcYPstydNM+LtuBtA73hEu8496NNaQTEJLpmvqXNzxKJAjC/OflYBHMUDtnJRv7zKLblI4o0Wg==,
       }
     engines: { node: '>=18.12' }
     hasBin: true
@@ -2901,7 +2901,7 @@ snapshots:
 
   picomatch@4.0.3: {}
 
-  pnpm@10.22.0: {}
+  pnpm@10.24.0: {}
 
   prettier-plugin-sh@0.18.0(prettier@3.7.3):
     dependencies:
