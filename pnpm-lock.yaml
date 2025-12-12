@@ -14,8 +14,8 @@ importers:
         specifier: ^0.80.2
         version: 0.80.2
       '@fission-ai/openspec':
-        specifier: ^0.14.0
-        version: 0.14.0
+        specifier: ^0.16.0
+        version: 0.16.0
       ccmanager:
         specifier: ^2.11.4
         version: 2.11.4
@@ -76,10 +76,10 @@ packages:
     engines: { node: ^16.13.0 || >=18.0.0 }
     hasBin: true
 
-  '@fission-ai/openspec@0.14.0':
+  '@fission-ai/openspec@0.16.0':
     resolution:
       {
-        integrity: sha512-bKO5FC9XzI77M2JOhLiv+eQp77sIuamaOygRTngnvONdLXziboY8QGq0xhk1WRiaXGVYfYSmQl8IXW20xxkYrw==,
+        integrity: sha512-6gCxGrsPWiHG3cGqKhDLOmNO1d4wbk51uvEE/Z5/sDBQfIUpLKN+4EURzQn/9I/cg6QQ/Vy3bIjZWpGRq87/Vg==,
       }
     engines: { node: '>=20.19.0' }
     hasBin: true
@@ -1975,10 +1975,10 @@ packages:
         integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==,
       }
 
-  zod@4.1.12:
+  zod@4.1.13:
     resolution:
       {
-        integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==,
+        integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==,
       }
 
 snapshots:
@@ -2008,14 +2008,14 @@ snapshots:
 
   '@devcontainers/cli@0.80.2': {}
 
-  '@fission-ai/openspec@0.14.0':
+  '@fission-ai/openspec@0.16.0':
     dependencies:
       '@inquirer/core': 10.3.2
       '@inquirer/prompts': 7.10.1
       chalk: 5.6.2
       commander: 14.0.2
       ora: 8.2.0
-      zod: 4.1.12
+      zod: 4.1.13
     transitivePeerDependencies:
       - '@types/node'
 
@@ -3108,4 +3108,4 @@ snapshots:
 
   yoga-wasm-web@0.3.3: {}
 
-  zod@4.1.12: {}
+  zod@4.1.13: {}
