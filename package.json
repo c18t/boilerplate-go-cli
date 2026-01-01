@@ -5,7 +5,7 @@
     "@devcontainers/cli": "^0.80.2",
     "@fission-ai/openspec": "^0.16.0",
     "ccmanager": "^2.11.4",
-    "markdownlint-cli2": "^0.19.1",
+    "markdownlint-cli2": "^0.20.0",
     "pnpm": "^10.24.0",
     "prettier": "^3.7.3",
     "prettier-plugin-sh": "^0.18.0",
