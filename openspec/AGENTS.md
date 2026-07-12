@@ -337,7 +337,8 @@ Headers matched with `trim(header)` - whitespace ignored.
 
 Common pitfall: Using MODIFIED to add a new concern without including the
 previous text. This causes loss of detail at archive time. If you aren’t
-explicitly changing the existing requirement, add a new requirement under ADDED instead.
+explicitly changing the existing requirement, add a new requirement under
+ADDED instead.
 
 Authoring a MODIFIED requirement correctly:
 
