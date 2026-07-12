@@ -4,7 +4,7 @@
 
 [tools]
 # languages
-go = "1.25.4"
+go = "1.25.12"
 node = "25"
 python = "3"
 
@@ -27,9 +27,11 @@ yamllint = "latest"
 "go:github.com/rhysd/actionlint/cmd/actionlint" = "latest"
 "go:github.com/spf13/cobra-cli" = "latest"
 "go:golang.org/x/tools/gopls" = "latest"
+"go:golang.org/x/vuln/cmd/govulncheck" = "latest"
 "go:honnef.co/go/tools/cmd/staticcheck" = "latest"
 "npm:@devcontainers/cli" = "latest"
 "npm:ccmanager" = "latest"
+"ubi:Bearer/bearer" = "latest"
 
 [tasks.setup]
 description = "Set up (Runs all `setup:*` tasks)"
