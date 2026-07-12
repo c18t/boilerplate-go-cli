@@ -1,6 +1,6 @@
 module github.com/c18t/app
 
-go 1.25.3
+go 1.25.12
 
 require (
 	github.com/samber/do/v2 v2.0.0
